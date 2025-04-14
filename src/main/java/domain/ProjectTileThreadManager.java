@@ -18,8 +18,10 @@ import presentation.GardenMenu;
  */
 public class ProjectTileThreadManager {
     private POOBvsZombies game;
+    @SuppressWarnings("unused")
     private GardenMenu garden;
     private ZombieThreadManager zombieThreadManager;
+    @SuppressWarnings("unused")
     private JLabel projectTileLabel;
 
     private volatile boolean isPaused = false; // Variable para controlar la pausa
@@ -48,8 +50,6 @@ public class ProjectTileThreadManager {
      * @param graficYPosition The y-coordinate position for the graphical representation of the projectile.
      */
     public void registerProjectTile(int row, int yPos, ProjectTile projectTile, int graphicXPosition, int graficYPosition) {
-        // Iniciar el hilo que gestionará la lógica del disparo
-        //this.projectTileLabel = createAndRegisterProjectTile(row, yPos);
         Thread t = new Thread(() -> projectTileLogic(row, yPos, projectTile, graphicXPosition, graficYPosition));
         t.start();
     }
@@ -104,14 +104,10 @@ public class ProjectTileThreadManager {
             while (targetZombie.health > 0) {
                 // Crear un nuevo proyectil cada vez que vamos a disparar
                 JLabel projectTileLabel = this.projectTileLabel = createAndRegisterProjectTile(graphicXPosition,graficYPosition, targetZombieLabel);
-                // JLabel projectTileLabel = createAndRegisterProjectTile(row, yPos);
 
                 int originXpos = graphicXPosition;
-                //int originYpos = graficYPosition;
                 int targetXpos = targetZombieLabel.getX();
 
-                // Mover el proyectil hacia el zombie
-                // moveProjectTile(originXpos, targetXpos, projectTileLabel);
                 moveProjectTile(originXpos + 95, targetXpos, projectTileLabel, targetZombie, targetZombieThread);
 
                 try {
@@ -143,16 +139,12 @@ public class ProjectTileThreadManager {
     
         JLabel projectTileLabel = new JLabel(scaledIcon);
     
-        //int originXPos = calculateOriginXPos(yPos);
-        //projectTileLabel.setSize(30, 30);
-         // Set the initial position of the projectile (Peashooter's position)
         projectTileLabel.setBounds(row+95, yPos+95, 30, 30);
     
         SwingUtilities.invokeLater(() -> {
             Container parent = zombieLabel.getParent();
             if (parent != null) {
                 parent.setLayout(null); // Ensure absolute positioning
-                //projectTileLabel.setBounds(row+600, yPos+95, 30, 30);
                 parent.add(projectTileLabel);
                 parent.setComponentZOrder(projectTileLabel, 0); // Bring to front if necessary
                 parent.revalidate();

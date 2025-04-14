@@ -8,8 +8,7 @@ import javax.swing.Timer;
  * The Team class represents an abstract team in the game with a resource counter and a list of characters.
  * It provides methods to manage resources and characters.
  */
-import java.util.ArrayList;
-import javax.swing.Timer;
+
 
 public abstract class Team {
 
